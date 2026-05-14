@@ -128,16 +128,51 @@
         <li>Dijarizaciju i transkripciju (NVIDIA Parakeet, pyannote)</li>
         <li>Razvoj i održavanje javnih servisa</li>
       </ul>
-      <h3 style="font-size: 17px; margin: 24px 0 8px;">Upravljanje sredstvima</h3>
+      <h3 style="font-size: 17px; margin: 24px 0 8px;">Custody arhitektura</h3>
+      <p>Donacije na on-chain Safe stižu kroz dvije razine povjerenja:</p>
+
+      <div class="cards" style="margin: 12px 0 16px;">
+        <div class="card">
+          <h3>1. Monerium EMI</h3>
+          <p>
+            Islandska regulirana institucija e-novca (FME licenca, MiCA-compliant od 2024).
+            Izdaje EURe — euro stablecoin u kojem je svaki token <strong>102% pokriven</strong>
+            kratkoročnim državnim/korporativnim obveznicama i segregiranim bankovnim depozitima.
+            Rezerve su pravno odvojene od matičnih sredstava — u slučaju stečaja idu izravno
+            držateljima EURe-a, ne u stečajnu masu.
+          </p>
+          <a class="more" href="https://monerium.com/eure/" target="_blank" rel="noopener">monerium.com/eure →</a>
+        </div>
+        <div class="card">
+          <h3>2. DOMOVINA Safe</h3>
+          <p>
+            <strong>Safe (2-od-3) multisig</strong> pod upravom DOMOVINA tima — niti jedna
+            isplata ili konverzija u IBAN ne može biti izvršena bez najmanje dva
+            neovisna potpisa. Plan: hardware walleti i proširenje kruga potpisnika
+            u sljedećoj fazi.
+          </p>
+          <a class="more" href="https://app.safe.global/home?safe=gno:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e" target="_blank" rel="noopener">Safe UI →</a>
+        </div>
+      </div>
+
+      <h3 style="font-size: 17px; margin: 24px 0 8px;">Što to znači u praksi</h3>
       <p>
-        Kripto donacije drže se na <strong>Safe (2-od-3) multisig</strong> walletu — niti jedna
-        transakcija ne može biti izvršena bez najmanje dva neovisna potpisa. Konverzija u
-        eure ide preko <a href="https://monerium.app" target="_blank" rel="noopener">Monerium</a>-a,
-        reguliranog EU izdavatelja e-novca, koji povezuje on-chain EURe stablecoin s IBAN računom.
-        Plan je u sljedećoj fazi uvesti hardware walete i proširiti krug potpisnika.
+        Kao i kod novca u banci, povjerenje se temelji na <strong>regulatoru i licenci</strong>,
+        ne na samostalnoj matematici smart contract-a. Monerium kao izdavatelj zadržava admin
+        ovlasti (mint, burn, blacklist adresa) — i to je <em>značajka</em>, ne mana.
+        2022. te su ovlasti iskorištene za
+        <a href="https://monerium.com/blog/2022/blacklisted/" target="_blank" rel="noopener">povrat 1.5M EURe ukradenih s LCX burze</a>
+        legitimnim držateljima. Iste se moći u načelu mogu primijeniti na bilo koju adresu —
+        zato je važno znati i objaviti tko stoji iza stablecoin-a koji koristimo.
+      </p>
+      <p>
+        Tijek SEPA donacije: vaš bankovni transfer → Monerium IBAN → Monerium minta EURe na
+        Gnosis Chainu → EURe stiže na DOMOVINA Safe. Tijek isplate: 2 od 3 potpisnika potpišu
+        redemption → Monerium burna EURe → SEPA outbound prema krajnjem korisniku (npr.
+        dobavljaču infrastrukture).
       </p>
 
-      <p>Pitanja? Kontakt: <a href="mailto:hello@domovina.ai">hello@domovina.ai</a></p>
+      <p style="margin-top: 24px;">Pitanja? Kontakt: <a href="mailto:hello@domovina.ai">hello@domovina.ai</a></p>
     </section>
 
     <footer class="site">

@@ -128,16 +128,52 @@
         <li>Diarization and transcription (NVIDIA Parakeet, pyannote)</li>
         <li>Development and maintenance of public services</li>
       </ul>
-      <h3 style="font-size: 17px; margin: 24px 0 8px;">Custody of funds</h3>
+      <h3 style="font-size: 17px; margin: 24px 0 8px;">Custody architecture</h3>
+      <p>On-chain donations rest on two layers of trust:</p>
+
+      <div class="cards" style="margin: 12px 0 16px;">
+        <div class="card">
+          <h3>1. Monerium EMI</h3>
+          <p>
+            Icelandic regulated e-money institution (licensed by FME, MiCA-compliant since 2024).
+            Issues EURe — a euro stablecoin where every token is <strong>102% backed</strong>
+            by short-term sovereign/corporate bonds and segregated bank deposits.
+            Reserves are legally separated from the company's own funds — in case of insolvency
+            they go directly to EURe holders, not into the insolvency estate.
+          </p>
+          <a class="more" href="https://monerium.com/eure/" target="_blank" rel="noopener">monerium.com/eure →</a>
+        </div>
+        <div class="card">
+          <h3>2. DOMOVINA Safe</h3>
+          <p>
+            <strong>Safe (2-of-3) multisig</strong> controlled by the DOMOVINA team — no
+            payout or conversion to IBAN can be executed without at least two independent
+            signatures. Hardware wallets and an expanded signer set are planned for the
+            next phase.
+          </p>
+          <a class="more" href="https://app.safe.global/home?safe=gno:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e" target="_blank" rel="noopener">Safe UI →</a>
+        </div>
+      </div>
+
+      <h3 style="font-size: 17px; margin: 24px 0 8px;">What this means in practice</h3>
       <p>
-        Crypto donations are held in a <strong>Safe (2-of-3) multisig</strong> wallet —
-        no transaction can be executed without at least two independent signatures.
-        Conversion to euros runs through <a href="https://monerium.app" target="_blank" rel="noopener">Monerium</a>,
-        a regulated EU e-money institution that bridges the on-chain EURe stablecoin to an IBAN account.
-        Hardware wallets and an expanded set of signers are planned for the next phase.
+        As with money in a bank, trust here rests on <strong>regulator and license</strong>,
+        not on standalone smart-contract mathematics. As the issuer, Monerium retains admin
+        powers (mint, burn, address blacklist) — and this is a <em>feature</em>, not a flaw.
+        In 2022 these powers were used to
+        <a href="https://monerium.com/blog/2022/blacklisted/" target="_blank" rel="noopener">recover 1.5M EURe stolen from the LCX exchange</a>
+        and reissue them to the legitimate holders. The same powers can in principle be
+        applied to any address — which is why it matters to know and disclose who stands
+        behind the stablecoin we use.
+      </p>
+      <p>
+        SEPA donation flow: your bank transfer → Monerium IBAN → Monerium mints EURe on
+        Gnosis Chain → EURe lands in the DOMOVINA Safe. Payout flow: 2 of 3 signers sign
+        a redemption → Monerium burns EURe → SEPA outbound to the end recipient (e.g. an
+        infrastructure vendor).
       </p>
 
-      <p>Questions? Contact: <a href="mailto:hello@domovina.ai">hello@domovina.ai</a></p>
+      <p style="margin-top: 24px;">Questions? Contact: <a href="mailto:hello@domovina.ai">hello@domovina.ai</a></p>
     </section>
 
     <footer class="site">
