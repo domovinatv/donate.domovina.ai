@@ -1,8 +1,7 @@
 // Donations widget: EPC QR (SEPA), HUB3 PDF417 (HR banks), EIP-681 QR (Web3).
 // On-chain inbound EURe transfer feed via direct JSON-RPC against Gnosis Chain.
-// Dependencies (loaded as UMD globals in <head>):
-//   - QRCode (qrcode@1.5.4)
-//   - bwipjs (bwip-js@4.5.2)
+// Dependency (UMD global in <head>):
+//   - bwipjs (bwip-js@4.5.2) — handles both QR and PDF417
 
 const SAFE = '0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e';
 const EURE = '0x420CA0f9B9b604cE0fd9C18EF134C705e5Fa3430';
@@ -120,33 +119,38 @@ function decimalToWei(amount, decimals) {
 
 // ---------- Rendering ----------
 
-function renderQR(canvasId, payload) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas || !window.QRCode) return;
-  window.QRCode.toCanvas(canvas, payload, {
-    width: 240,
-    margin: 1,
-    errorCorrectionLevel: 'M',
-    color: { dark: '#002F6C', light: '#FFFFFF' },
-  }, (err) => { if (err) console.error('QR render error', err); });
-}
-
-function renderPdf417(canvasId, payload) {
+function renderBarcode(canvasId, opts) {
   const canvas = document.getElementById(canvasId);
   if (!canvas || !window.bwipjs) return;
   try {
     window.bwipjs.toCanvas(canvas, {
-      bcid: 'pdf417',
-      text: payload,
-      scale: 2,
-      height: 12,
-      includetext: false,
       backgroundcolor: 'FFFFFF',
       barcolor: '002F6C',
+      ...opts,
     });
   } catch (e) {
-    console.error('PDF417 render error', e);
+    console.error(`Barcode render error (${canvasId})`, e);
   }
+}
+
+function renderQR(canvasId, payload) {
+  renderBarcode(canvasId, {
+    bcid: 'qrcode',
+    text: payload,
+    scale: 4,
+    padding: 2,
+    eclevel: 'M',
+  });
+}
+
+function renderPdf417(canvasId, payload) {
+  renderBarcode(canvasId, {
+    bcid: 'pdf417',
+    text: payload,
+    scale: 2,
+    height: 12,
+    includetext: false,
+  });
 }
 
 function setText(id, text) {

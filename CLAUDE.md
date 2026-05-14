@@ -44,7 +44,7 @@ Vanilla JS dozvoljen za:
 - on-chain read-only operacije (JSON-RPC, ERC-20 logs)
 - klijent-side UX (tabs, amount input, copy-to-clipboard)
 
-CDN biblioteke OK uz **pinned SRI hash**. Trenutni: `qrcode@1.5.4`, `bwip-js@4.5.2` (jsdelivr).
+CDN biblioteke OK uz **pinned SRI hash**. Trenutno: `bwip-js@4.5.2` (jsdelivr) — pokriva i QR i PDF417.
 
 Sve veće (Monerium SDK private ops, e-mail receipts, etc.) ide u CF Pages Function (Node), ne u klijent.
 
