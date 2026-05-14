@@ -37,10 +37,21 @@ Svi su trenutno **placeholder TBD** dok ne stignu pravi podaci.
 - HTML element identifiers (class, id) = engleski
 - Commit poruke: konvencionalni commits (`feat:`, `fix:`, `chore:`, `docs:`, `style:`)
 
+## JS policy
+
+Vanilla JS dozvoljen za:
+- payment QR / barcode generaciju (EPC, HUB3 PDF417, EIP-681)
+- on-chain read-only operacije (JSON-RPC, ERC-20 logs)
+- klijent-side UX (tabs, amount input, copy-to-clipboard)
+
+CDN biblioteke OK uz **pinned SRI hash**. Trenutni: `qrcode@1.5.4`, `bwip-js@4.5.2` (jsdelivr).
+
+Sve veće (Monerium SDK private ops, e-mail receipts, etc.) ide u CF Pages Function (Node), ne u klijent.
+
 ## Što NE raditi
 
-- **Nemoj** dodavati framework (React, Vue, Astro) — statički HTML je point.
-- **Nemoj** dodavati JS koji nije nužan (max: language switcher, copy-to-clipboard za IBAN).
+- **Nemoj** dodavati framework (React, Vue, Svelte, Astro) — statički HTML je point.
+- **Nemoj** dodavati build step (Vite, webpack, esbuild). Ako lib nema UMD/ESM CDN bundle, vendor lokalno u `public/vendor/`.
 - **Nemoj** ubacivati pravi IBAN/Gnosis adrese bez eksplicitne potvrde — koristi placeholder dok user ne pošalje.
 - **Nemoj** kopirati brand vrijednosti — referenciraj `sms.domovina.ai/webhook/src/views.ts` ako trebaš provjeriti detalje.
 

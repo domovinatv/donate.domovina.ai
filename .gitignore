@@ -5,3 +5,7 @@ node_modules/
 *.log
 .vscode/
 .idea/
+
+# Local-only tooling state
+.claude/
+.wrangler/

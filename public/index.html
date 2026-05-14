@@ -16,6 +16,13 @@
   <meta property="og:url" content="https://donate.domovina.ai/" />
   <meta property="og:locale" content="hr_HR" />
   <link rel="stylesheet" href="/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"
+          integrity="sha384-Izc791esqyEy3BEIC42q7jbE0AaOkACziN+dyyXgYeDmpeMCLz0xA+xYN3aCd5zz"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bwip-js@4.5.2/dist/bwip-js-min.js"
+          integrity="sha384-sKSea5CZuJvgyJxkGMASMftngekA7awGAz8EwcVgq+/7XgqbPeG7O8WIiYJe/D1/"
+          crossorigin="anonymous" defer></script>
+  <script src="/donations.js" defer></script>
 </head>
 <body>
 
@@ -62,19 +69,98 @@
       </div>
     </section>
 
+    <section id="donate-quick">
+      <h2>Brzo doniraj</h2>
+      <p class="intro">
+        Skeniraj QR u svojoj banci ili Web3 walletu. Donacija stiže na DOMOVINA Safe na
+        Gnosis Chainu — bilo izravno (EURe) ili preko Monerium SEPA mosta.
+        Iznos po želji — preset 1.01 € za prvi test.
+      </p>
+
+      <div class="amount-row">
+        <label for="amount">Iznos</label>
+        <input type="number" id="amount" value="1.01" step="0.01" min="0.01" />
+        <span class="currency">EUR</span>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="epc" role="tab">EPC QR (Revolut + EU banke)</button>
+        <button class="tab" data-tab="hub3" role="tab">HUB3 PDF417 (HR banke)</button>
+        <button class="tab" data-tab="eip" role="tab">EURe (Web3 wallet)</button>
+      </div>
+
+      <div class="tab-panel" data-panel="epc">
+        <div class="qr-container"><canvas id="qr-epc" width="240" height="240"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-epc"></pre>
+          <button class="btn-copy" data-copy="payload-epc">Kopiraj</button>
+        </div>
+        <p class="hint">
+          Primatelj: <strong>ITalk d.o.o.</strong> · IBAN: <code>EE70 7777 0001 6292 1128</code>
+          · BIC: <code>LHVBEE22</code> · Remittance: <code>gnosis:0x6693…d65e</code>.
+          Banka šalje EUR na Monerium IBAN, Monerium minta EURe na DOMOVINA Safe.
+        </p>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="hub3">
+        <div class="qr-container"><canvas id="qr-hub3" width="320" height="120"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-hub3"></pre>
+          <button class="btn-copy" data-copy="payload-hub3">Kopiraj</button>
+        </div>
+        <p class="hint">
+          Primatelj: <strong>ITalk d.o.o.</strong> · IBAN: <code>HR60 2390 0011 5001 5704 4</code>
+          · Model <code>HR00</code> · Poziv na broj <code>1991</code>.
+          Skeniraj u hrvatskoj mobilnoj banking aplikaciji (HPB, PBZ, Zaba, Erste, OTP).
+        </p>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="eip">
+        <div class="qr-container"><canvas id="qr-eip" width="240" height="240"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-eip"></pre>
+          <button class="btn-copy" data-copy="payload-eip">Kopiraj</button>
+        </div>
+        <p class="hint">
+          EURe ERC-20 token na Gnosis Chainu (chain id 100) izravno na DOMOVINA Safe.
+          Otvori QR u MetaMask, Rainbow ili Coinbase Wallet-u.
+        </p>
+      </div>
+    </section>
+
     <section>
       <h2>Načini doniranja</h2>
       <p class="intro">Odaberite kanal koji vam najviše odgovara. Svaka donacija — velika ili mala — direktno produžava život projekta.</p>
 
       <article class="donate-card featured">
-        <h3>Bankovni transfer (IBAN) <span class="badge">Hrvatska</span></h3>
-        <p class="desc">Najjednostavnije za hrvatske donatore — bez naknada za posrednike.</p>
+        <h3>Bankovni transfer (IBAN) <span class="badge">SEPA + HR</span></h3>
+        <p class="desc">
+          Ako više voliš ručno upisati podatke u banci umjesto skenirati QR iznad — evo
+          dva načina. Oba završavaju na DOMOVINA Safe.
+        </p>
+
         <div class="detail">
-          <strong>IBAN:</strong> <span class="tbd">TBD</span><br />
-          <strong>Primatelj:</strong> <span class="tbd">TBD</span><br />
-          <strong>Model / poziv na broj:</strong> <span class="tbd">TBD</span><br />
-          <strong>Opis plaćanja:</strong> Donacija DOMOVINA
+          <strong>1) Hrvatski IBAN (HPB):</strong><br />
+          IBAN: <code>HR60 2390 0011 5001 5704 4</code><br />
+          Primatelj: ITalk d.o.o., IX. Južna obala 20, Zagreb<br />
+          Model: <code>HR00</code> · Poziv na broj: <code>1991</code><br />
+          Opis: <code>gnosis:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e</code>
         </div>
+
+        <div class="detail" style="margin-top: 8px;">
+          <strong>2) Monerium SEPA IBAN (LHV Pank):</strong><br />
+          IBAN: <code>EE70 7777 0001 6292 1128</code><br />
+          BIC: <code>LHVBEE22</code><br />
+          Primatelj: ITalk d.o.o.<br />
+          <strong style="color: var(--red);">Obavezno</strong> u opis plaćanja:
+          <code>gnosis:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e</code><br />
+          <span class="muted" style="font-size: 12px;">Bez tog opisa Monerium ne zna kome mintati EURe.</span>
+        </div>
+
+        <p class="desc" style="margin-top: 12px; font-size: 13px;">
+          Operativna kompanija iza projekta: <strong>ITalk d.o.o.</strong> (Zagreb) — KYB
+          verificirana u Monerium-u. Vaš bankovni izvadak prikazat će ITalk d.o.o. kao primatelja.
+        </p>
       </article>
 
       <article class="donate-card">
@@ -113,6 +199,22 @@
           <a href="https://gnosisscan.io/address/0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e#tokentxns" target="_blank" rel="noopener">Gnosisscan</a>
         </p>
       </article>
+    </section>
+
+    <section id="donate-onchain">
+      <h2>Uživo: on-chain donacije</h2>
+      <p class="intro">
+        Sve EURe transakcije koje stignu na DOMOVINA Safe — direktno s Gnosis Chain-a,
+        bez backend posrednika. Mint sa adrese <code>0x000…000</code> znači da je netko
+        donirao SEPA-om, a Monerium je iznos automatski konvertirao u on-chain EURe.
+      </p>
+      <div id="tx-list" class="tx-list" aria-live="polite">
+        <p class="muted">Učitavanje transakcija…</p>
+      </div>
+      <p class="hint" style="margin-top: 12px;">
+        Auto-refresh svakih 60 sekundi ·
+        <a href="https://gnosisscan.io/address/0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e#tokentxns" target="_blank" rel="noopener">Vidi sve na Gnosisscan-u →</a>
+      </p>
     </section>
 
     <section>

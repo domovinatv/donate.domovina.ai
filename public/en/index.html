@@ -16,6 +16,13 @@
   <meta property="og:url" content="https://donate.domovina.ai/en/" />
   <meta property="og:locale" content="en_US" />
   <link rel="stylesheet" href="/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"
+          integrity="sha384-Izc791esqyEy3BEIC42q7jbE0AaOkACziN+dyyXgYeDmpeMCLz0xA+xYN3aCd5zz"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bwip-js@4.5.2/dist/bwip-js-min.js"
+          integrity="sha384-sKSea5CZuJvgyJxkGMASMftngekA7awGAz8EwcVgq+/7XgqbPeG7O8WIiYJe/D1/"
+          crossorigin="anonymous" defer></script>
+  <script src="/donations.js" defer></script>
 </head>
 <body>
 
@@ -62,19 +69,98 @@
       </div>
     </section>
 
+    <section id="donate-quick">
+      <h2>Quick donate</h2>
+      <p class="intro">
+        Scan the QR in your bank or Web3 wallet. The donation lands on the DOMOVINA Safe on
+        Gnosis Chain — either directly (EURe) or via the Monerium SEPA bridge.
+        Adjust the amount as you like — €1.01 preset is for first-test purposes.
+      </p>
+
+      <div class="amount-row">
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" value="1.01" step="0.01" min="0.01" />
+        <span class="currency">EUR</span>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="epc" role="tab">EPC QR (Revolut + EU banks)</button>
+        <button class="tab" data-tab="hub3" role="tab">HUB3 PDF417 (Croatian banks)</button>
+        <button class="tab" data-tab="eip" role="tab">EURe (Web3 wallet)</button>
+      </div>
+
+      <div class="tab-panel" data-panel="epc">
+        <div class="qr-container"><canvas id="qr-epc" width="240" height="240"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-epc"></pre>
+          <button class="btn-copy" data-copy="payload-epc">Copy</button>
+        </div>
+        <p class="hint">
+          Recipient: <strong>ITalk d.o.o.</strong> · IBAN: <code>EE70 7777 0001 6292 1128</code>
+          · BIC: <code>LHVBEE22</code> · Remittance: <code>gnosis:0x6693…d65e</code>.
+          Your bank sends EUR to the Monerium IBAN; Monerium mints EURe into the DOMOVINA Safe.
+        </p>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="hub3">
+        <div class="qr-container"><canvas id="qr-hub3" width="320" height="120"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-hub3"></pre>
+          <button class="btn-copy" data-copy="payload-hub3">Copy</button>
+        </div>
+        <p class="hint">
+          Recipient: <strong>ITalk d.o.o.</strong> · IBAN: <code>HR60 2390 0011 5001 5704 4</code>
+          · Model <code>HR00</code> · Reference <code>1991</code>.
+          Scan in a Croatian mobile banking app (HPB, PBZ, Zaba, Erste, OTP).
+        </p>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="eip">
+        <div class="qr-container"><canvas id="qr-eip" width="240" height="240"></canvas></div>
+        <div class="payload-row">
+          <pre class="payload" id="payload-eip"></pre>
+          <button class="btn-copy" data-copy="payload-eip">Copy</button>
+        </div>
+        <p class="hint">
+          EURe ERC-20 token on Gnosis Chain (chain id 100) sent directly to the DOMOVINA Safe.
+          Open the QR in MetaMask, Rainbow, or Coinbase Wallet.
+        </p>
+      </div>
+    </section>
+
     <section>
       <h2>Ways to donate</h2>
       <p class="intro">Choose whichever channel works best for you. Every donation — big or small — directly extends the project's lifespan.</p>
 
       <article class="donate-card featured">
-        <h3>Bank transfer (IBAN) <span class="badge">Croatia</span></h3>
-        <p class="desc">Easiest for Croatian donors — no intermediary fees. International SEPA transfers also accepted.</p>
+        <h3>Bank transfer (IBAN) <span class="badge">SEPA + HR</span></h3>
+        <p class="desc">
+          If you prefer to enter the data manually in your bank instead of scanning the QR above —
+          two options. Both end up in the DOMOVINA Safe.
+        </p>
+
         <div class="detail">
-          <strong>IBAN:</strong> <span class="tbd">TBD</span><br />
-          <strong>Recipient:</strong> <span class="tbd">TBD</span><br />
-          <strong>Reference:</strong> <span class="tbd">TBD</span><br />
-          <strong>Payment description:</strong> DOMOVINA donation
+          <strong>1) Croatian IBAN (HPB):</strong><br />
+          IBAN: <code>HR60 2390 0011 5001 5704 4</code><br />
+          Recipient: ITalk d.o.o., IX. Južna obala 20, Zagreb<br />
+          Model: <code>HR00</code> · Reference: <code>1991</code><br />
+          Description: <code>gnosis:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e</code>
         </div>
+
+        <div class="detail" style="margin-top: 8px;">
+          <strong>2) Monerium SEPA IBAN (LHV Pank):</strong><br />
+          IBAN: <code>EE70 7777 0001 6292 1128</code><br />
+          BIC: <code>LHVBEE22</code><br />
+          Recipient: ITalk d.o.o.<br />
+          <strong style="color: var(--red);">Required</strong> in payment description:
+          <code>gnosis:0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e</code><br />
+          <span class="muted" style="font-size: 12px;">Without this, Monerium won't know which wallet to mint EURe into.</span>
+        </div>
+
+        <p class="desc" style="margin-top: 12px; font-size: 13px;">
+          Operating company behind the project: <strong>ITalk d.o.o.</strong> (Zagreb) — KYB-verified
+          with Monerium. Your bank statement will show ITalk d.o.o. as the recipient.
+        </p>
       </article>
 
       <article class="donate-card">
@@ -113,6 +199,22 @@
           <a href="https://gnosisscan.io/address/0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e#tokentxns" target="_blank" rel="noopener">Gnosisscan</a>
         </p>
       </article>
+    </section>
+
+    <section id="donate-onchain">
+      <h2>Live: on-chain donations</h2>
+      <p class="intro">
+        Every EURe transfer that lands in the DOMOVINA Safe — straight from Gnosis Chain,
+        no backend in between. A mint from <code>0x000…000</code> means someone donated via
+        SEPA and Monerium automatically converted the amount into on-chain EURe.
+      </p>
+      <div id="tx-list" class="tx-list" aria-live="polite">
+        <p class="muted">Loading transactions…</p>
+      </div>
+      <p class="hint" style="margin-top: 12px;">
+        Auto-refresh every 60 seconds ·
+        <a href="https://gnosisscan.io/address/0x6693a7D19486Dc45e9F90Fd2D515d972bBA2d65e#tokentxns" target="_blank" rel="noopener">See all on Gnosisscan →</a>
+      </p>
     </section>
 
     <section>
