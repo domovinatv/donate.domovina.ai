@@ -172,3 +172,9 @@ licenca), poljske platforme, Flattr (ugašen), kripto on-ramp za 1 € (minimaln
 - YouTube članstva / Super Chat dostupnost u HR (YPP da, fan funding?)
 - Naknada za dolaznu uplatu na poslovni račun: PBZ, Erste, RBA, HPB, Addiko
 - Slovenija, Srbija, BiH: lokalne platforme
+
+## Vezani dokumenti
+
+- `../kanali-za-donacije.md` — odluka: što aktivirati (tier 1–3, ne aktivirati)
+- `2026-10-06-android-push-gateway.md` — APK analiza, push za priljev po banci
+- github.com/domovinatv/bank-push-gateway — implementacija gatewaya
